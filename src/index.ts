@@ -3,16 +3,18 @@
  * @Email: w_kiwi@163.com
  * @Date: 2020-04-28 11:44:42
  * @LastEditors: wkiwi
- * @LastEditTime: 2020-07-05 22:02:07
+ * @LastEditTime: 2020-07-05 23:41:40
  */
-import { AxiosRequestConfig } from './types'
+import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from './types'
 import xhr from './xhr'
 import { buildURL } from './helpers/url'
-import { transformRequest } from './helpers/data'
+import { transformRequest, transformResponse } from './helpers/data'
 import { processHeaders } from './helpers/headers'
-function axios(config: AxiosRequestConfig): void {
+function axios(config: AxiosRequestConfig): AxiosPromise {
   processConfig(config)
-  xhr(config)
+  return xhr(config).then(res => {
+    return transformResponseData(res)
+  })
 }
 
 function processConfig(config: AxiosRequestConfig): void {
@@ -29,8 +31,14 @@ function transformUrl(config: AxiosRequestConfig): string {
 function transformRequestData(config: AxiosRequestConfig): any {
   return transformRequest(config.data)
 }
+
 function transformHeaders(config: AxiosRequestConfig): any {
   const { headers = {}, data } = config
   return processHeaders(headers, data)
+}
+
+function transformResponseData(res: AxiosResponse): AxiosResponse {
+  res.data = transformResponse(res.data)
+  return res
 }
 export default axios

@@ -3,7 +3,7 @@
  * @Email: w_kiwi@163.com
  * @Date: 2020-07-05 21:48:32
  * @LastEditors: wkiwi
- * @LastEditTime: 2020-07-05 21:59:13
+ * @LastEditTime: 2020-07-05 23:31:42
  */
 import { isPlainObject } from './utils'
 function normalizeHeaderName(headers: any, normalizedName: string): void {
@@ -28,4 +28,24 @@ export function processHeaders(headers: any, data: any): any {
     }
   }
   return headers
+}
+
+export function parseHeaders(headers: string): any {
+  let parsed = Object.create(null)
+  if (!headers) {
+    return parsed
+  }
+  headers.split('\r\n').forEach(line => {
+    let [key, val] = line.split(':')
+    key = key.trim().toLowerCase()
+    if (!key) {
+      return
+    }
+    if (val) {
+      val = val.trim()
+    }
+    parsed[key] = val
+  })
+
+  return parsed
 }
