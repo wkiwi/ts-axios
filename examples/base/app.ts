@@ -3,7 +3,7 @@
  * @Email: w_kiwi@163.com
  * @Date: 2020-07-05 21:07:49
  * @LastEditors: wkiwi
- * @LastEditTime: 2020-07-05 21:37:32
+ * @LastEditTime: 2020-07-05 22:35:16
  */
 import axios from '../../src/index'
 
@@ -75,6 +75,27 @@ axios({
     a: 1,
     b: 2
   }
+})
+
+axios({
+  method: 'post',
+  url: '/base/post',
+  headers: {
+    'content-type': 'application/json;charset=utf-8'
+  },
+  data: {
+    a: 1,
+    b: 2
+  }
+})
+
+const paramsString = 'q=URLUtils.searchParams&topic=api'
+const searchParams = new URLSearchParams(paramsString)
+
+axios({
+  method: 'post',
+  url: '/base/post',
+  data: searchParams
 })
 
 const arr = new Int32Array([21, 31])
