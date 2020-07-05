@@ -3,9 +3,9 @@
  * @Email: w_kiwi@163.com
  * @Date: 2020-04-28 15:02:34
  * @LastEditors: wkiwi
- * @LastEditTime: 2020-04-28 17:04:47
+ * @LastEditTime: 2020-07-05 21:31:33
  */
-import { isDate, isObject } from 'util'
+import { isDate, isPlainObject } from './utils'
 function encode(val: string): string {
   return encodeURIComponent(val)
     .replace(/%40/g, '@')
@@ -40,7 +40,7 @@ export function buildURL(url: string, params?: any): string {
     values.forEach(val => {
       if (isDate(val)) {
         val = val.toISOString()
-      } else if (isObject(val)) {
+      } else if (isPlainObject(val)) {
         val = JSON.stringify(val)
       }
       parts.push(`${encode(key)}=${encode(val)}`)
