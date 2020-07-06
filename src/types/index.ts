@@ -3,7 +3,7 @@
  * @Email: w_kiwi@163.com
  * @Date: 2020-04-28 11:48:06
  * @LastEditors: wkiwi
- * @LastEditTime: 2020-07-05 23:18:16
+ * @LastEditTime: 2020-07-06 15:09:33
  */
 export type Method =
   | 'get'
@@ -28,6 +28,7 @@ export interface AxiosRequestConfig {
   params?: any
   headers?: any
   responseType?: XMLHttpRequestResponseType
+  timeout?: number
 }
 
 export interface AxiosResponse {
@@ -40,3 +41,11 @@ export interface AxiosResponse {
 }
 
 export interface AxiosPromise extends Promise<AxiosResponse> {}
+
+export interface AxiosError extends Error {
+  isAxiosError: boolean
+  config?: AxiosRequestConfig
+  code?: string | null
+  request?: any
+  response?: AxiosResponse
+}
